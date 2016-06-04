@@ -144,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS,
-                        offset, String.format("%s:%s", manufacturer, model).getBytes(StandardCharsets.UTF_8));
+                        offset, String.format("%s:%s:%s", phoneData
+                                .getManufacturer(), phoneData.getModel(), phoneData.getIMEI()).getBytes(StandardCharsets.UTF_8));
 
             /*if (offset != 0) {
                 mGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_INVALID_OFFSET, offset,
@@ -231,5 +232,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void setButtonState(Button v) {
         v.setText(!isBleAdvertisting ? "Start BLE" : "Stop BLE");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("isBleAdvertisting", isBleAdvertisting);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        isBleAdvertisting = savedInstanceState.getBoolean("isBleAdvertisting");
+
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }
