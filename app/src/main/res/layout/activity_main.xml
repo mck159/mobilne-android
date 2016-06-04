@@ -9,32 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="srokawegrzyn.agh.edu.pl.bleperipheralimei.MainActivity">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="APPLICATION\n\n"
-        android:scrollbars="vertical"
-        android:maxLines="10000"
-        android:singleLine="false"
-        android:id="@+id/textView"
-        android:layout_below="@+id/buttonCancel"
-        android:layout_alignEnd="@+id/buttonCancel" />
-
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/buttonOk"
-        android:onClick="buttonStartAdvertisingClick"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:id="@+id/buttonCancel"
-        android:layout_below="@+id/buttonOk"
-        android:onClick="buttonStopAdvertisingClick"
-        android:layout_alignParentStart="true" />
+        android:layout_height="fill_parent"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:onClick="buttonMainClick"/>
 </RelativeLayout>

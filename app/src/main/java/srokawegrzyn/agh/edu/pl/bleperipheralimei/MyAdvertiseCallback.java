@@ -1,6 +1,7 @@
 package srokawegrzyn.agh.edu.pl.bleperipheralimei;
 
 import android.bluetooth.le.AdvertiseCallback;
+import android.bluetooth.le.AdvertiseSettings;
 import android.util.Log;
 
 /**
@@ -10,7 +11,7 @@ public class MyAdvertiseCallback extends AdvertiseCallback {
     public static String TAG = "D";
         @Override
         public void onStartFailure(int errorCode) {
-            super.onStartFailure(errorCode);
+//            super.onStartFailure(errorCode);
             Log.e(TAG, "Not broadcasting: " + errorCode);
             String statusText;
             switch (errorCode) {
@@ -35,4 +36,9 @@ public class MyAdvertiseCallback extends AdvertiseCallback {
                     Log.wtf(TAG, "Unhandled error: " + errorCode);
             }
         }
+
+    @Override
+    public void onStartSuccess(AdvertiseSettings settingsInEffect) {
+//        super.onStartSuccess(settingsInEffect);
+    }
 }
