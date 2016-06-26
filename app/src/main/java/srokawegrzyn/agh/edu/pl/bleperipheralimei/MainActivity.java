@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         (BluetoothGattDescriptor.PERMISSION_READ | BluetoothGattDescriptor.PERMISSION_WRITE))
 
         );
-//        mBatteryLevelCharacteristic.setValue(2, BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-        mBatteryLevelCharacteristic.setValue("CHUUUUJ");
+        mBatteryLevelCharacteristic.setValue("CHR1");
 
         mBatteryService = new BluetoothGattService(BATTERY_SERVICE_UUID,
                 BluetoothGattService.SERVICE_TYPE_PRIMARY);
@@ -101,31 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onConnectionStateChange(BluetoothDevice device, final int status, int newState) {
-                int x = 5;
-                if (status == BluetoothGatt.GATT_SUCCESS) {
-                /*if (newState == BluetoothGatt.STATE_CONNECTED) {
-                    mBluetoothDevices.add(device);
-                    updateConnectedDevicesStatus();
-                    Log.v(TAG, "Connected to device: " + device.getAddress());
-                } else if (newState == BluetoothGatt.STATE_DISCONNECTED) {
-                    mBluetoothDevices.remove(device);
-                    updateConnectedDevicesStatus();
-                    Log.v(TAG, "Disconnected from device");
-                }*/
-                } else {
-                /*mBluetoothDevices.remove(device);
-                updateConnectedDevicesStatus();
-                // There are too many gatt errors (some of them not even in the documentation) so we just
-                // show the error to the user.
-                final String errorMessage = getString(R.string.status_errorWhenConnecting) + ": " + status;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(Peripheral.this, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                });
-                Log.e(TAG, "Error when connecting: " + status);*/
-                }
             }
 
             @Override
@@ -139,21 +113,11 @@ public class MainActivity extends AppCompatActivity {
             /* value (optional) */ null);
                     return;
                 }
-                String manufacturer = Build.MANUFACTURER;
-                String model = Build.MODEL;
-
 
                 gattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS,
                         offset, String.format("%s:%s:%s", phoneData
                                 .getManufacturer(), phoneData.getModel(), phoneData.getIMEI()).getBytes(StandardCharsets.UTF_8));
 
-            /*if (offset != 0) {
-                mGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_INVALID_OFFSET, offset,
-            *//* value (optional) *//* null);
-                return;
-            }
-            mGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS,
-                    offset, characteristic.getValue());*/
             }
 
             @Override
@@ -166,14 +130,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCharacteristicWriteRequest(BluetoothDevice device, int requestId,
                                                      BluetoothGattCharacteristic characteristic, boolean preparedWrite, boolean responseNeeded,
                                                      int offset, byte[] value) {
-                int x = 5;
                 Log.v(TAG, "Characteristic Write request: " + Arrays.toString(value));
-            /*int status = mCurrentServiceFragment.writeCharacteristic(characteristic, offset, value);
-            if (responseNeeded) {
-                mGattServer.sendResponse(device, requestId, status,*/
-//            /* No need to respond with an offset */ 0,
-//            /* No need to respond with a value */ null);
-//            }
             }
 
             @Override
@@ -182,12 +139,6 @@ public class MainActivity extends AppCompatActivity {
                                                  int offset,
                                                  byte[] value) {
                 Log.v(TAG, "Descriptor Write Request " + descriptor.getUuid() + " " + Arrays.toString(value));
-                int x = 5;
-                if(responseNeeded) {
-                /*mGattServer.sendResponse(device, requestId, BluetoothGatt.GATT_SUCCESS,*/
-//            /* No need to respond with offset */ 0,
-//            /* No need to respond with a value */ null);
-                }
             }
 
             @Override
@@ -197,17 +148,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDescriptorReadRequest(BluetoothDevice device, int requestId, int offset, BluetoothGattDescriptor descriptor) {
-                int x = 5;
             }
 
             @Override
             public void onExecuteWrite(BluetoothDevice device, int requestId, boolean execute) {
-                int x = 5;
             }
 
             @Override
             public void onMtuChanged(BluetoothDevice device, int mtu) {
-                int x = 5;
             }
         });
         gattServer.addService(mBatteryService);

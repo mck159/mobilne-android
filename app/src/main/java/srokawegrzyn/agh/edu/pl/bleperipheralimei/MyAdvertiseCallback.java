@@ -11,7 +11,6 @@ public class MyAdvertiseCallback extends AdvertiseCallback {
     public static String TAG = "D";
         @Override
         public void onStartFailure(int errorCode) {
-//            super.onStartFailure(errorCode);
             Log.e(TAG, "Not broadcasting: " + errorCode);
             String statusText;
             switch (errorCode) {
@@ -39,6 +38,5 @@ public class MyAdvertiseCallback extends AdvertiseCallback {
 
     @Override
     public void onStartSuccess(AdvertiseSettings settingsInEffect) {
-//        super.onStartSuccess(settingsInEffect);
     }
 }
