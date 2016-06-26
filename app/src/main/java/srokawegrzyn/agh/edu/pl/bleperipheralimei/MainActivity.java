@@ -14,7 +14,6 @@ import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
@@ -30,9 +29,9 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     private static final UUID CLIENT_CHARACTERISTIC_CONFIGURATION_UUID = UUID
             .fromString("00002902-0000-1000-8000-00805f9b34f1");
-    private static final UUID BATTERY_SERVICE_UUID = UUID
+    private static final UUID SERVICE_UUID = UUID
             .fromString("0000180F-0000-1000-8000-00805f9b34f2");
-    private static final UUID BATTERY_LEVEL_UUID = UUID
+    private static final UUID CHARACTERISTICS_UUID = UUID
             .fromString("00002A19-0000-1000-8000-00805f9b34f3");
     private BluetoothLeAdvertiser bleAdvertiser;
     private AdvertiseSettings mAdvSettings;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private AdvertiseCallback bleAdveriseCallback = new MyAdvertiseCallback();
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothManager bluetoothManager;
-    private BluetoothGattService mBatteryService;
+    private BluetoothGattService mGattService;
     private BluetoothGattServer gattServer;
     private PhoneData phoneData;
     private boolean isBleAdvertisting = false;
@@ -57,20 +56,20 @@ public class MainActivity extends AppCompatActivity {
 
         bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
-        BluetoothGattCharacteristic mBatteryLevelCharacteristic = new BluetoothGattCharacteristic(BATTERY_LEVEL_UUID,
+        BluetoothGattCharacteristic mGattCharacteristics = new BluetoothGattCharacteristic(CHARACTERISTICS_UUID,
                 BluetoothGattCharacteristic.PROPERTY_READ | BluetoothGattCharacteristic.PROPERTY_NOTIFY,
                 BluetoothGattCharacteristic.PERMISSION_READ);
 
-        mBatteryLevelCharacteristic.addDescriptor(
+        mGattCharacteristics.addDescriptor(
                 new BluetoothGattDescriptor(CLIENT_CHARACTERISTIC_CONFIGURATION_UUID,
                         (BluetoothGattDescriptor.PERMISSION_READ | BluetoothGattDescriptor.PERMISSION_WRITE))
 
         );
-        mBatteryLevelCharacteristic.setValue("CHR1");
+        mGattCharacteristics.setValue("CHR1");
 
-        mBatteryService = new BluetoothGattService(BATTERY_SERVICE_UUID,
+        mGattService = new BluetoothGattService(SERVICE_UUID,
                 BluetoothGattService.SERVICE_TYPE_PRIMARY);
-        mBatteryService.addCharacteristic(mBatteryLevelCharacteristic);
+        mGattService.addCharacteristic(mGattCharacteristics);
 
 
 
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mAdvData = new AdvertiseData.Builder()
                 .setIncludeDeviceName(false)
                 .setIncludeTxPowerLevel(true)
-                .addServiceUuid(new ParcelUuid(BATTERY_SERVICE_UUID))
+                .addServiceUuid(new ParcelUuid(SERVICE_UUID))
                 .build();
 
 
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             public void onMtuChanged(BluetoothDevice device, int mtu) {
             }
         });
-        gattServer.addService(mBatteryService);
+        gattServer.addService(mGattService);
 
     }
 
